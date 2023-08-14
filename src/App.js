@@ -7,13 +7,12 @@ import Login from "./pages/Login";
 function App() {
   return (
     <>
-      <Navbar>
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </Navbar>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </>
   );
 }
