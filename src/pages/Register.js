@@ -24,6 +24,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showError, setShowError] = useState(false);
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,8 +43,10 @@ const Register = () => {
       } else if (err.message) {
         setError(err.message);
       }
+      setShowError(true);
       setTimeout(() => {
         setError("");
+        setShowError(false);
       }, 5000);
     }
   };
@@ -57,9 +60,10 @@ const Register = () => {
       sx={{ boxShadow: 5 }}
       backgroundColor={theme.palette.background.alt}
     >
-      <Collapse in={error}>
+      <Collapse in={showError}>
+        {" "}
         <Alert severity="error" sx={{ mb: 2 }}>
-          {error}
+          {showError}
         </Alert>
       </Collapse>
       <form onSubmit={handleSubmit}>
