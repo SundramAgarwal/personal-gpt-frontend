@@ -27,16 +27,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(`${BACKEND_URL}/api/v1/auth/login`, {
-        email,
-        password,
-      });
-      if (data.token.accessToken) {
-        // localStorage.setItem("authToken", JSON.stringify(data));
-        localStorage.setItem("authToken", true);
-        toast.success("Login Successfully");
-        navigate("/");
-      }
+      await axios.post(`${BACKEND_URL}/api/v1/auth/login`, { email, password });
+      toast.success("Login Successfully");
+      localStorage.setItem("authToken", true);
+      navigate("/");
     } catch (err) {
       console.log(error);
       if (err.response.data.error) {
