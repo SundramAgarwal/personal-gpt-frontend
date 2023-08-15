@@ -24,11 +24,11 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/api/v1/auth/register", {
+      await axios.post(`${BACKEND_URL}/api/v1/auth/register`, {
         username,
         email,
         password,
