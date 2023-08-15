@@ -16,14 +16,14 @@ import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  //media
   const isNotMobile = useMediaQuery("(min-width: 1000px");
 
-  //states
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showError, setShowError] = useState(false); // New state to control Collapse visibility
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -32,14 +32,15 @@ const Login = () => {
       localStorage.setItem("authToken", true);
       navigate("/");
     } catch (err) {
-      console.log(error);
       if (err.response.data.error) {
         setError(err.response.data.error);
       } else if (err.message) {
         setError(err.message);
       }
+      setShowError(true); // Show the error Collapse
       setTimeout(() => {
         setError("");
+        setShowError(false); // Hide the error Collapse after some time
       }, 5000);
     }
   };
@@ -53,7 +54,9 @@ const Login = () => {
       sx={{ boxShadow: 5 }}
       backgroundColor={theme.palette.background.alt}
     >
-      <Collapse in={error}>
+      <Collapse in={showError}>
+        {" "}
+        {/* Use the new state variable here */}
         <Alert severity="error" sx={{ mb: 2 }}>
           {error}
         </Alert>
