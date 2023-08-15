@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import { useMemo } from "react";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import { themeSettings } from "./theme";
+import Summary from "./pages/Summary";
 function App() {
   const theme = useMemo(() => createTheme(themeSettings(), []));
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<Homepage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/summary" element={<Summary />} />
         </Routes>
       </ThemeProvider>
     </>
