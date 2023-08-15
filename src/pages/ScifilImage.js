@@ -1,28 +1,30 @@
-import {
-  Alert,
-  Box,
-  Button,
-  Card,
-  Collapse,
-  TextField,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import axios from "axios";
+import {
+  Box,
+  Typography,
+  useTheme,
+  useMediaQuery,
+  TextField,
+  Button,
+  Alert,
+  Collapse,
+  Card,
+} from "@mui/material";
 
 const Summary = () => {
   const theme = useTheme();
-  const isNotMobile = useMediaQuery("(min-width: 1000px");
-
-  const [text, setText] = useState("");
+  const navigate = useNavigate();
+  //media
+  const isNotMobile = useMediaQuery("(min-width: 1000px)");
+  // states
+  const [text, settext] = useState("");
   const [summary, setSummary] = useState("");
   const [error, setError] = useState("");
-  const [showError, setShowError] = useState(false); // New state to control Collapse visibility
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-
+  //register ctrl
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -30,21 +32,20 @@ const Summary = () => {
         `${BACKEND_URL}/api/v1/openai/summary`,
         { text }
       );
+      console.log(data);
       setSummary(data);
     } catch (err) {
+      console.log(error);
       if (err.response.data.error) {
         setError(err.response.data.error);
       } else if (err.message) {
         setError(err.message);
       }
-      setShowError(true); // Show the error Collapse
       setTimeout(() => {
         setError("");
-        setShowError(false); // Hide the error Collapse after some time
       }, 5000);
     }
   };
-
   return (
     <Box
       width={isNotMobile ? "40%" : "80%"}
@@ -54,19 +55,16 @@ const Summary = () => {
       sx={{ boxShadow: 5 }}
       backgroundColor={theme.palette.background.alt}
     >
-      <Collapse in={showError}>
-        {" "}
-        {/* Use the new state variable here */}
+      <Collapse in={error}>
         <Alert severity="error" sx={{ mb: 2 }}>
           {error}
         </Alert>
       </Collapse>
       <form onSubmit={handleSubmit}>
-        <Typography variant="h2" textAlign={"center"}>
-          Summarize Text
-        </Typography>
+        <Typography variant="h3">Summarize Text</Typography>
+
         <TextField
-          placeholder="Add your Text"
+          placeholder="add your text"
           type="text"
           multiline={true}
           required
@@ -74,9 +72,10 @@ const Summary = () => {
           fullWidth
           value={text}
           onChange={(e) => {
-            setText(e.target.value);
+            settext(e.target.value);
           }}
         />
+
         <Button
           type="submit"
           fullWidth
@@ -84,12 +83,13 @@ const Summary = () => {
           size="large"
           sx={{ color: "white", mt: 2 }}
         >
-          SIGH IN
+          Submit
         </Button>
         <Typography mt={2}>
-          Not this tool ? <Link to="/">Go Back</Link>
+          not this tool ? <Link to="/">GO BACK</Link>
         </Typography>
       </form>
+
       {summary ? (
         <Card
           sx={{
@@ -99,10 +99,10 @@ const Summary = () => {
             height: "500px",
             borderRadius: 5,
             borderColor: "natural.medium",
-            bgColor: "background.default",
+            bgcolor: "background.default",
           }}
         >
-          <Typography>{summary}</Typography>
+          <Typography p={2}>{summary}</Typography>
         </Card>
       ) : (
         <Card
@@ -113,7 +113,7 @@ const Summary = () => {
             height: "500px",
             borderRadius: 5,
             borderColor: "natural.medium",
-            bgColor: "background.default",
+            bgcolor: "background.default",
           }}
         >
           <Typography
@@ -121,11 +121,11 @@ const Summary = () => {
             color="natural.main"
             sx={{
               textAlign: "center",
-              verticalAlign: "middle",
+              verticalAlign: "middel",
               lineHeight: "450px",
             }}
           >
-            Summary will Appear Here
+            Summary Will Apprea Here
           </Typography>
         </Card>
       )}
