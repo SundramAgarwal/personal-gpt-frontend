@@ -8,11 +8,12 @@ const Navbar = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const loggedIn = JSON.parse(localStorage.getItem("authToken"));
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
   //handle logout
   const handleLogout = async () => {
     try {
-      await axios.post("/api/v1/auth/logout");
+      await axios.post(`${BACKEND_URL}/api/v1/auth/logout`);
       localStorage.removeItem("authToken");
       toast.success("logout successfully ");
       navigate("/login");
