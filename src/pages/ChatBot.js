@@ -24,6 +24,7 @@ const ChatBot = () => {
   const [text, setText] = useState("");
   const [response, setResponse] = useState("");
   const [error, setError] = useState("");
+  const [showError, setShowError] = useState(false);
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
   //register ctrl
@@ -35,7 +36,7 @@ const ChatBot = () => {
         { text }
       );
       console.log(data);
-      setResponse(data);
+      setResponse(data.generatedText);
     } catch (err) {
       console.log(error);
       if (err.response.data.error) {
@@ -43,8 +44,10 @@ const ChatBot = () => {
       } else if (err.message) {
         setError(err.message);
       }
+      setShowError(true); // Show the error Collapse
       setTimeout(() => {
         setError("");
+        setShowError(false); // Hide the error Collapse after some time
       }, 5000);
     }
   };
@@ -57,7 +60,7 @@ const ChatBot = () => {
       sx={{ boxShadow: 5 }}
       backgroundColor={theme.palette.background.alt}
     >
-      <Collapse in={error}>
+      <Collapse in={showError}>
         <Alert severity="error" sx={{ mb: 2 }}>
           {error}
         </Alert>

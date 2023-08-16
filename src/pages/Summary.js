@@ -19,7 +19,7 @@ const Summary = () => {
   const isNotMobile = useMediaQuery("(min-width: 1000px");
 
   const [text, setText] = useState("");
-  const [summary, setSummary] = useState("");
+  const [summary, setSummary] = useState([]);
   const [error, setError] = useState("");
   const [showError, setShowError] = useState(false); // New state to control Collapse visibility
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -31,7 +31,7 @@ const Summary = () => {
         `${BACKEND_URL}/api/v1/openai/summary`,
         { text }
       );
-      setSummary(data);
+      setSummary(data.summary); // Set the summary state correctly
     } catch (err) {
       if (err.response.data.error) {
         setError(err.response.data.error);

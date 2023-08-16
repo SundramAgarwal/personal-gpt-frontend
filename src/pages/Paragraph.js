@@ -22,8 +22,9 @@ const Paragraph = () => {
   const isNotMobile = useMediaQuery("(min-width: 1000px)");
   // states
   const [text, setText] = useState("");
-  const [para, setPara] = useState("");
+  const [para, setPara] = useState([]);
   const [error, setError] = useState("");
+  const [showError, setShowError] = useState(false);
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
   //register ctrl
   const handleSubmit = async (e) => {
@@ -33,8 +34,7 @@ const Paragraph = () => {
         `${BACKEND_URL}/api/v1/openai/paragraph`,
         { text }
       );
-      console.log(data);
-      setPara(data);
+      setPara(data.generatedParagraph);
     } catch (err) {
       console.log(error);
       if (err.response.data.error) {
@@ -42,8 +42,10 @@ const Paragraph = () => {
       } else if (err.message) {
         setError(err.message);
       }
+      setShowError(true); // Show the error Collapse
       setTimeout(() => {
         setError("");
+        setShowError(false); // Hide the error Collapse after some time
       }, 5000);
     }
   };
@@ -56,7 +58,7 @@ const Paragraph = () => {
       sx={{ boxShadow: 5 }}
       backgroundColor={theme.palette.background.alt}
     >
-      <Collapse in={error}>
+      <Collapse in={showError}>
         <Alert severity="error" sx={{ mb: 2 }}>
           {error}
         </Alert>

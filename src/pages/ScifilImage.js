@@ -24,6 +24,7 @@ const ScifiImage = () => {
   const [text, setText] = useState("");
   const [image, setImage] = useState("");
   const [error, setError] = useState("");
+  const [showError, setShowError] = useState(false);
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
   //register ctrl
@@ -34,8 +35,7 @@ const ScifiImage = () => {
         `${BACKEND_URL}/api/v1/openai/scifi-image`,
         { text }
       );
-      console.log(data);
-      setImage(data);
+      setImage(data.imageUrl);
     } catch (err) {
       console.log(error);
       if (err.response.data.error) {
@@ -43,8 +43,10 @@ const ScifiImage = () => {
       } else if (err.message) {
         setError(err.message);
       }
+      setShowError(true); // Show the error Collapse
       setTimeout(() => {
         setError("");
+        setShowError(false); // Hide the error Collapse after some time
       }, 5000);
     }
   };
@@ -57,7 +59,7 @@ const ScifiImage = () => {
       sx={{ boxShadow: 5 }}
       backgroundColor={theme.palette.background.alt}
     >
-      <Collapse in={error}>
+      <Collapse in={showError}>
         <Alert severity="error" sx={{ mb: 2 }}>
           {error}
         </Alert>
