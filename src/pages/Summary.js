@@ -11,10 +11,11 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Summary = () => {
   const theme = useTheme();
+  const loggedIn = JSON.parse(localStorage.getItem("authToken"));
   const isNotMobile = useMediaQuery("(min-width: 1000px");
 
   const [text, setText] = useState("");
@@ -22,7 +23,7 @@ const Summary = () => {
   const [error, setError] = useState("");
   const [showError, setShowError] = useState(false); // New state to control Collapse visibility
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -61,73 +62,109 @@ const Summary = () => {
           {error}
         </Alert>
       </Collapse>
-      <form onSubmit={handleSubmit}>
-        <Typography variant="h2" textAlign={"center"}>
-          Summarize Text
-        </Typography>
-        <TextField
-          placeholder="Add your Text"
-          type="text"
-          multiline={true}
-          required
-          margin="normal"
-          fullWidth
-          value={text}
-          onChange={(e) => {
-            setText(e.target.value);
-          }}
-        />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          size="large"
-          sx={{ color: "white", mt: 2 }}
-        >
-          Summarize It
-        </Button>
-        <Typography mt={2}>
-          Not this tool ? <Link to="/">Go Back</Link>
-        </Typography>
-      </form>
-      {summary ? (
-        <Card
-          sx={{
-            mt: 4,
-            border: 1,
-            boxShadow: 0,
-            height: "500px",
-            borderRadius: 5,
-            borderColor: "natural.medium",
-            bgColor: "background.default",
-          }}
-        >
-          <Typography>{summary}</Typography>
-        </Card>
+      {loggedIn ? (
+        <>
+          <form onSubmit={handleSubmit}>
+            <Typography variant="h2" textAlign={"center"}>
+              Summarize Text
+            </Typography>
+            <TextField
+              placeholder="Add your Text"
+              type="text"
+              multiline={true}
+              required
+              margin="normal"
+              fullWidth
+              value={text}
+              onChange={(e) => {
+                setText(e.target.value);
+              }}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              size="large"
+              sx={{ color: "white", mt: 2 }}
+            >
+              Summarize It
+            </Button>
+            <Typography mt={2}>
+              Not this tool ? <Link to="/">Go Back</Link>
+            </Typography>
+          </form>
+          {summary ? (
+            <Card
+              sx={{
+                mt: 4,
+                border: 1,
+                boxShadow: 0,
+                height: "500px",
+                borderRadius: 5,
+                borderColor: "natural.medium",
+                bgColor: "background.default",
+              }}
+            >
+              <Typography>{summary}</Typography>
+            </Card>
+          ) : (
+            <Card
+              sx={{
+                mt: 4,
+                border: 1,
+                boxShadow: 0,
+                height: "500px",
+                borderRadius: 5,
+                borderColor: "natural.medium",
+                bgColor: "background.default",
+              }}
+            >
+              <Typography
+                variant="h5"
+                color="natural.main"
+                sx={{
+                  textAlign: "center",
+                  verticalAlign: "middle",
+                  lineHeight: "450px",
+                }}
+              >
+                Summary will Appear Here
+              </Typography>
+            </Card>
+          )}
+        </>
       ) : (
-        <Card
-          sx={{
-            mt: 4,
-            border: 1,
-            boxShadow: 0,
-            height: "500px",
-            borderRadius: 5,
-            borderColor: "natural.medium",
-            bgColor: "background.default",
-          }}
-        >
-          <Typography
-            variant="h5"
-            color="natural.main"
-            sx={{
-              textAlign: "center",
-              verticalAlign: "middle",
-              lineHeight: "450px",
-            }}
+        <>
+          <Box
+            width={isNotMobile ? "40%" : "80%"}
+            p={"2rem"}
+            m={"2rem auto"}
+            borderRadius={5}
+            sx={{ boxShadow: 5 }}
+            backgroundColor={theme.palette.background.alt}
+            textAlign="center"
           >
-            Summary will Appear Here
-          </Typography>
-        </Card>
+            <Typography variant="h4" mb={2}>
+              Please login to continue.
+            </Typography>
+            <Button
+              component={Link}
+              to="/login"
+              variant="contained"
+              size="large"
+              sx={{
+                color: "white",
+                animation: "blink 0.1s infinite alternate", // Faster blinking (0.5s)
+                "@keyframes blink": {
+                  "0%": { backgroundColor: "green" },
+                  "100%": { backgroundColor: "darkgreen" },
+                },
+              }}
+            >
+              Login
+            </Button>
+          </Box>
+        </>
       )}
     </Box>
   );
