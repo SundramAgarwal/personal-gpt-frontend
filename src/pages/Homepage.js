@@ -8,7 +8,19 @@ const Homepage = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Box sx={{ display: "flex", flexDirection: "row" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center", // Center content vertically
+          alignItems: "center", // Center content horizontally
+          gap: "20px", // Add spacing between Card components
+          "@media (max-width: 600px)": {
+            // Apply styles for screens with max width of 768px
+            flexDirection: "column", // Change direction to horizontal
+          },
+        }}
+      >
         <Box p={2}>
           <Typography variant="h4" mb={2} fontWeight="bold">
             Text Generation
