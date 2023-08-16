@@ -26,6 +26,7 @@ const Register = () => {
   const [error, setError] = useState("");
   const [showError, setShowError] = useState(false);
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -34,7 +35,10 @@ const Register = () => {
         email,
         password,
       });
-      toast.success("User Register Successfully");
+
+      // Display a toast message after successful registration
+      toast.success("User registered successfully");
+
       navigate("/login");
     } catch (err) {
       console.log(error);
@@ -61,9 +65,8 @@ const Register = () => {
       backgroundColor={theme.palette.background.alt}
     >
       <Collapse in={showError}>
-        {" "}
         <Alert severity="error" sx={{ mb: 2 }}>
-          {showError}
+          {error}
         </Alert>
       </Collapse>
       <form onSubmit={handleSubmit}>
