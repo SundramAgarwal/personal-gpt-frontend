@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import Homepage from "./pages/Homepage";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import { useMemo } from "react";
+import React, { useMemo } from "react"; // Import React and useMemo
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import { themeSettings } from "./theme";
 import Summary from "./pages/Summary";
@@ -12,8 +12,9 @@ import ScifiImage from "./pages/ScifilImage";
 import Paragraph from "./pages/Paragraph";
 import ChatBot from "./pages/ChatBot";
 import JsConverter from "./pages/JsConverter";
+
 function App() {
-  const theme = useMemo(() => createTheme(themeSettings(), []));
+  const theme = useMemo(() => createTheme(themeSettings()), []); // Provide an empty array or appropriate dependencies
   return (
     <>
       <ThemeProvider theme={theme}>
