@@ -10,8 +10,9 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
-import { toast } from "react-hot-toast";
+// import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const theme = useTheme();
@@ -28,9 +29,9 @@ const Login = () => {
     e.preventDefault();
     try {
       await axios.post(`${BACKEND_URL}/api/v1/auth/login`, { email, password });
-      toast.success("Login Successfully");
       localStorage.setItem("authToken", true);
       navigate("/");
+      toast.success("Login Successfully");
     } catch (err) {
       if (err.response.data.error) {
         setError(err.response.data.error);
