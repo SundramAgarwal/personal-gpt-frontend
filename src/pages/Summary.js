@@ -84,7 +84,7 @@ const Summary = () => {
           size="large"
           sx={{ color: "white", mt: 2 }}
         >
-          SIGH IN
+          Summarize It
         </Button>
         <Typography mt={2}>
           Not this tool ? <Link to="/">Go Back</Link>

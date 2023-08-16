@@ -14,14 +14,14 @@ import {
   Card,
 } from "@mui/material";
 
-const ScifiImage = () => {
+const JsConverter = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   //media
   const isNotMobile = useMediaQuery("(min-width: 1000px)");
   // states
   const [text, setText] = useState("");
-  const [image, setImage] = useState("");
+  const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -30,11 +30,13 @@ const ScifiImage = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        `${BACKEND_URL}/api/v1/openai/scifi-image`,
-        { text }
+        `${BACKEND_URL}/api/v1/openai/js-converter`,
+        {
+          text,
+        }
       );
       console.log(data);
-      setImage(data);
+      setCode(data);
     } catch (err) {
       console.log(error);
       if (err.response.data.error) {
@@ -62,7 +64,7 @@ const ScifiImage = () => {
         </Alert>
       </Collapse>
       <form onSubmit={handleSubmit}>
-        <Typography variant="h3">Sci-fi Image</Typography>
+        <Typography variant="h3">JS Converter</Typography>
 
         <TextField
           placeholder="add your text"
@@ -84,14 +86,14 @@ const ScifiImage = () => {
           size="large"
           sx={{ color: "white", mt: 2 }}
         >
-          Generate
+          Convert
         </Button>
         <Typography mt={2}>
           not this tool ? <Link to="/">GO BACK</Link>
         </Typography>
       </form>
 
-      {image ? (
+      {code ? (
         <Card
           sx={{
             mt: 4,
@@ -101,11 +103,12 @@ const ScifiImage = () => {
             borderRadius: 5,
             borderColor: "natural.medium",
             bgcolor: "background.default",
+            overflow: "auto",
           }}
         >
-          <Box sx={{ display: "flex", justifyContent: "center", my: 5 }}>
-            <img src={image} alt="scifiimage" />
-          </Box>
+          <pre>
+            <Typography p={2}>{code}</Typography>
+          </pre>
         </Card>
       ) : (
         <Card
@@ -128,7 +131,7 @@ const ScifiImage = () => {
               lineHeight: "450px",
             }}
           >
-            Your Sci-fi Image Will Appear Here
+            Your Code Will Appear Here
           </Typography>
         </Card>
       )}
@@ -136,4 +139,4 @@ const ScifiImage = () => {
   );
 };
 
-export default ScifiImage;
+export default JsConverter;

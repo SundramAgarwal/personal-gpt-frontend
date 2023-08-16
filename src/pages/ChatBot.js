@@ -14,14 +14,14 @@ import {
   Card,
 } from "@mui/material";
 
-const ScifiImage = () => {
+const ChatBot = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   //media
   const isNotMobile = useMediaQuery("(min-width: 1000px)");
   // states
   const [text, setText] = useState("");
-  const [image, setImage] = useState("");
+  const [response, setResponse] = useState("");
   const [error, setError] = useState("");
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -30,11 +30,11 @@ const ScifiImage = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        `${BACKEND_URL}/api/v1/openai/scifi-image`,
+        `${BACKEND_URL}/api/v1/openai/chatbot`,
         { text }
       );
       console.log(data);
-      setImage(data);
+      setResponse(data);
     } catch (err) {
       console.log(error);
       if (err.response.data.error) {
@@ -62,7 +62,7 @@ const ScifiImage = () => {
         </Alert>
       </Collapse>
       <form onSubmit={handleSubmit}>
-        <Typography variant="h3">Sci-fi Image</Typography>
+        <Typography variant="h3">Ask with Chatbot</Typography>
 
         <TextField
           placeholder="add your text"
@@ -84,14 +84,14 @@ const ScifiImage = () => {
           size="large"
           sx={{ color: "white", mt: 2 }}
         >
-          Generate
+          Chat
         </Button>
         <Typography mt={2}>
           not this tool ? <Link to="/">GO BACK</Link>
         </Typography>
       </form>
 
-      {image ? (
+      {response ? (
         <Card
           sx={{
             mt: 4,
@@ -103,9 +103,7 @@ const ScifiImage = () => {
             bgcolor: "background.default",
           }}
         >
-          <Box sx={{ display: "flex", justifyContent: "center", my: 5 }}>
-            <img src={image} alt="scifiimage" />
-          </Box>
+          <Typography p={2}>{response}</Typography>
         </Card>
       ) : (
         <Card
@@ -128,7 +126,7 @@ const ScifiImage = () => {
               lineHeight: "450px",
             }}
           >
-            Your Sci-fi Image Will Appear Here
+            Bot Response
           </Typography>
         </Card>
       )}
@@ -136,4 +134,4 @@ const ScifiImage = () => {
   );
 };
 
-export default ScifiImage;
+export default ChatBot;
