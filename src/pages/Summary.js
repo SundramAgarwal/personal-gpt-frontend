@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Summary = () => {
   const theme = useTheme();
@@ -23,7 +23,7 @@ const Summary = () => {
   const [error, setError] = useState("");
   const [showError, setShowError] = useState(false); // New state to control Collapse visibility
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

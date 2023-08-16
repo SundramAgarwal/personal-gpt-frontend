@@ -16,6 +16,7 @@ import {
 
 const ScifiImage = () => {
   const theme = useTheme();
+  const loggedIn = JSON.parse(localStorage.getItem("authToken"));
   // const navigate = useNavigate();
   //media
   const isNotMobile = useMediaQuery("(min-width: 1000px)");
