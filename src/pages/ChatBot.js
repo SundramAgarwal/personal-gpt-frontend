@@ -62,74 +62,110 @@ const ChatBot = () => {
           {error}
         </Alert>
       </Collapse>
-      <form onSubmit={handleSubmit}>
-        <Typography variant="h3">Ask with Chatbot</Typography>
+      {loggedIn ? (
+        <>
+          <form onSubmit={handleSubmit}>
+            <Typography variant="h3">Ask with Chatbot</Typography>
 
-        <TextField
-          placeholder="add your text"
-          type="text"
-          multiline={true}
-          required
-          margin="normal"
-          fullWidth
-          value={text}
-          onChange={(e) => {
-            setText(e.target.value);
-          }}
-        />
+            <TextField
+              placeholder="add your text"
+              type="text"
+              multiline={true}
+              required
+              margin="normal"
+              fullWidth
+              value={text}
+              onChange={(e) => {
+                setText(e.target.value);
+              }}
+            />
 
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          size="large"
-          sx={{ color: "white", mt: 2 }}
-        >
-          Chat
-        </Button>
-        <Typography mt={2}>
-          not this tool ? <Link to="/">GO BACK</Link>
-        </Typography>
-      </form>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              size="large"
+              sx={{ color: "white", mt: 2 }}
+            >
+              Chat
+            </Button>
+            <Typography mt={2}>
+              not this tool ? <Link to="/">GO BACK</Link>
+            </Typography>
+          </form>
 
-      {response ? (
-        <Card
-          sx={{
-            mt: 4,
-            border: 1,
-            boxShadow: 0,
-            height: "500px",
-            borderRadius: 5,
-            borderColor: "natural.medium",
-            bgcolor: "background.default",
-          }}
-        >
-          <Typography p={2}>{response}</Typography>
-        </Card>
+          {response ? (
+            <Card
+              sx={{
+                mt: 4,
+                border: 1,
+                boxShadow: 0,
+                height: "500px",
+                borderRadius: 5,
+                borderColor: "natural.medium",
+                bgcolor: "background.default",
+              }}
+            >
+              <Typography p={2}>{response}</Typography>
+            </Card>
+          ) : (
+            <Card
+              sx={{
+                mt: 4,
+                border: 1,
+                boxShadow: 0,
+                height: "500px",
+                borderRadius: 5,
+                borderColor: "natural.medium",
+                bgcolor: "background.default",
+              }}
+            >
+              <Typography
+                variant="h5"
+                color="natural.main"
+                sx={{
+                  textAlign: "center",
+                  verticalAlign: "middle",
+                  lineHeight: "450px",
+                }}
+              >
+                Bot Response
+              </Typography>
+            </Card>
+          )}
+        </>
       ) : (
-        <Card
-          sx={{
-            mt: 4,
-            border: 1,
-            boxShadow: 0,
-            height: "500px",
-            borderRadius: 5,
-            borderColor: "natural.medium",
-            bgcolor: "background.default",
-          }}
-        >
-          <Typography
-            variant="h5"
-            color="natural.main"
-            sx={{
-              textAlign: "center",
-              verticalAlign: "middle",
-              lineHeight: "450px",
-            }}
+        <>
+          <Box
+            width={isNotMobile ? "40%" : "80%"}
+            p={"2rem"}
+            m={"2rem auto"}
+            borderRadius={5}
+            sx={{ boxShadow: 5 }}
+            backgroundColor={theme.palette.background.alt}
+            textAlign="center"
           >
-            Bot Response
-          </Typography>
-        </Card>
+            <Typography variant="h4" mb={2}>
+              Please login to continue.
+            </Typography>
+            <Button
+              component={Link}
+              to="/login"
+              variant="contained"
+              size="large"
+              sx={{
+                color: "white",
+                animation: "blink 0.1s infinite alternate", // Faster blinking (0.5s)
+                "@keyframes blink": {
+                  "0%": { backgroundColor: "green" },
+                  "100%": { backgroundColor: "darkgreen" },
+                },
+              }}
+            >
+              Login
+            </Button>
+          </Box>
+        </>
       )}
     </Box>
   );
