@@ -3,7 +3,8 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 const Navbar = () => {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -15,9 +16,9 @@ const Navbar = () => {
     try {
       await axios.post(`${BACKEND_URL}/api/v1/auth/logout`);
       localStorage.removeItem("authToken");
+      navigate("/login");
       toast.success("logout successfully ");
       window.location.reload();
-      navigate("/login");
     } catch (error) {
       console.log(error);
     }

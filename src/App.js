@@ -12,12 +12,15 @@ import ScifiImage from "./pages/ScifilImage";
 import Paragraph from "./pages/Paragraph";
 import ChatBot from "./pages/ChatBot";
 import JsConverter from "./pages/JsConverter";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const theme = useMemo(() => createTheme(themeSettings()), []); // Provide an empty array or appropriate dependencies
   return (
     <>
       <ThemeProvider theme={theme}>
+        <ToastContainer />
         <CssBaseline />
         <Navbar />
         <Routes>
