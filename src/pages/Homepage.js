@@ -22,13 +22,15 @@ const Homepage = () => {
     <Box
       sx={{
         display: "flex",
-        flexDirection: "row",
+        // flexDirection: "row",
+        flexWrap: "wrap",
         justifyContent: "center", // Center content vertically
         alignItems: "center", // Center content horizontally
         gap: "20px", // Add spacing between Card components
         "@media (max-width: 600px)": {
           // Apply styles for screens with max width of 768px
-          flexDirection: "column", // Change direction to horizontal
+          // flexDirection: "column", // Change direction to horizontal
+          flexWrap: "wrap",
         },
       }}
     >
