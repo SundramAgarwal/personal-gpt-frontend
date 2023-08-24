@@ -35,8 +35,10 @@ const Login = () => {
     } catch (err) {
       if (err.response.data.error) {
         setError(err.response.data.error);
+        toast.error("Invalid Credentials");
       } else if (err.message) {
         setError(err.message);
+        toast.error("Invalid Credentials");
       }
       setShowError(true); // Show the error Collapse
       setTimeout(() => {

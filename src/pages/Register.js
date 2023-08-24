@@ -45,8 +45,10 @@ const Register = () => {
       console.log(error);
       if (err.response.data.error) {
         setError(err.response.data.error);
+        toast.error("Something went wrong");
       } else if (err.message) {
         setError(err.message);
+        toast.error("Something went wrong");
       }
       setShowError(true);
       setTimeout(() => {
